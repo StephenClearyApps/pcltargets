@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod": "webpack -p",
     "watch": "webpack -d --watch",
-    "serve": "http-server dist -s -c-1 -o"
+    "serve": "http-server docs -s -c-1 -o"
   },
   "author": "Stephen Cleary",
   "license": "MIT",
