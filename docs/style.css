@@ -1,21 +1,11 @@
-/* Styles go here */
-
-.verticalSpacing {
-  margin-bottom: 0.5em;
+.btn-default.focus, .btn-default:focus {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: lightblue;
-}
-
-.bad {
-  color: red;
-}
-
-.good {
-  color: green;
-}
-
-.pushdown {
-  margin-top: 1em;
+.btn-primary.focus, .btn-primary:focus {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 }

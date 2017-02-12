@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { ButtonGroup, Button } from 'react-bootstrap';
 
 import { Group, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
 import { Checkbox } from './checkbox';
@@ -7,10 +8,13 @@ import { State } from '../reducers';
 import { actions } from '../actions';
 
 function group(g: Group, state: State) {
+    console.log("First in " + g.friendlyName + ": " + state.form[g.group[0].nugetTarget]);
     return (
         <div key={g.key}>
             {g.friendlyName}
-            {g.group.map(x => <Checkbox key={x.nugetTarget} label={x.friendlyName} isChecked={state.form[x.nugetTarget]} onChange={() => actions.setFormValue(x.nugetTarget, !state.form[x.nugetTarget])} />)}
+            <ButtonGroup>
+                {g.group.map(x => <Button key={x.nugetTarget} bsStyle={state.form[x.nugetTarget] ? "primary" : "default"} onClick={() => actions.setFormValue(x.nugetTarget, !state.form[x.nugetTarget])}>{x.friendlyName}</Button>)}
+            </ButtonGroup>
         </div>
     );
 }
