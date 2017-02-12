@@ -1,0 +1,37 @@
+{
+  "name": "pcltargets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "webpack -p",
+    "watch": "webpack -d --watch",
+    "serve": "http-server dist -s -c-1 -o"
+  },
+  "author": "Stephen Cleary",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/redux-immutable-state-invariant": "^1.2.30",
+    "awesome-typescript-loader": "^3.0.3",
+    "http-server": "^0.9.0",
+    "redux-immutable-state-invariant": "^1.2.4",
+    "source-map-loader": "^0.1.6",
+    "typescript": "^2.1.6",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.52",
+    "@types/react": "^15.0.8",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-redux": "^4.4.36",
+    "@types/redux": "^3.6.0",
+    "@types/redux-actions": "^1.2.2",
+    "lodash": "^4.17.4",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-actions": "^1.2.1"
+  }
+}
