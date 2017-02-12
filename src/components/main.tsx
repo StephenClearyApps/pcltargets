@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, Checkbox } from 'react-bootstrap';
 
 import { Group, ExtendedFramework, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, prefix } from '../logic/logic';
-import { Checkbox } from './checkbox';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
@@ -42,7 +41,7 @@ function results(state: State) {
 function MainComponent(props: State) {
     return (
         <div>
-            <Checkbox label="Include legacy profiles" isChecked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}/>
+            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy profiles</Checkbox>            
             {getGroups(props.includeLegacy).map(x => group(x, props))}
             {results(props)}
         </div>
