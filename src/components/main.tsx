@@ -2,27 +2,31 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ButtonGroup, Button } from 'react-bootstrap';
 
-import { Group, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
+import { Group, ExtendedFramework, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, prefix } from '../logic/logic';
 import { Checkbox } from './checkbox';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
+function framework(f: ExtendedFramework, state: State) {
+    const selected = state.selections[prefix(f.nugetTarget)] === f.nugetTarget;
+    return <Button key={f.nugetTarget} bsStyle={selected ? "primary" : "default"} onClick={() => actions.select(f.nugetTarget, !selected)}>{f.friendlyName}</Button>;
+}
+
 function group(g: Group, state: State) {
-    console.log("First in " + g.friendlyName + ": " + state.form[g.group[0].nugetTarget]);
     return (
         <div key={g.key}>
             {g.friendlyName}
             <ButtonGroup>
-                {g.group.map(x => <Button key={x.nugetTarget} bsStyle={state.form[x.nugetTarget] ? "primary" : "default"} onClick={() => actions.setFormValue(x.nugetTarget, !state.form[x.nugetTarget])}>{x.friendlyName}</Button>)}
+                {g.group.map(x => framework(x, state))}
             </ButtonGroup>
         </div>
     );
 }
 
 function results(state: State) {
-    if (numSelectedGroups(state.includeLegacy, state.form) < 2)
+    if (numSelectedGroups(state.includeLegacy, state.selections) < 2)
         return <div>Select frameworks from at least two groups to show the target PCLs.</div>;
-    const frameworks = selectedFrameworks(state.includeLegacy, state.form);
+    const frameworks = selectedFrameworks(state.includeLegacy, state.selections);
     const profiles = findAllPcls(frameworks);
     const result = removeSubsetPcls(profiles);
     return (

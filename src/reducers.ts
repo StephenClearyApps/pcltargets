@@ -1,31 +1,34 @@
 import { handleActions } from 'redux-actions';
+
 import * as A from './actionTypes';
+import { prefix } from './logic/logic';
 
 export interface State {
     includeLegacy: boolean;
-    form: {
-        [name: string]: boolean;
+    selections: {
+        [groupName: string]: string;
     }
 }
 
-function setFormValue(state: State, action: A.SetFormValueAction): State {
+function select(state: State, action: A.SelectAction): State {
     return { ...state,
-        form: { ...state.form,
-            [action.payload.name]: action.payload.value
+        selections: { ...state.selections,
+            [prefix(action.payload.name)]: action.payload.selected ? action.payload.name : null
         }
     };
 }
 
 function setIncludeLegacy(state: State, action: A.SetIncludeLegacyAction): State {
     return { ...state,
-        includeLegacy: action.payload.value
+        includeLegacy: action.payload.value,
+        selections: { }
     };
 }
 
 export const reducers = (handleActions as ReduxActionsFixed.HandleActions<State>)({
-    [A.Types.SET_FORM_VALUE]: setFormValue,
+    [A.Types.SELECT]: select,
     [A.Types.SET_INCLUDE_LEGACY]: setIncludeLegacy
 }, {
     includeLegacy: true,
-    form: {}
+    selections: { }
 });

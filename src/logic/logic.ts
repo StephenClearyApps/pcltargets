@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { data } from './data';
 
-function prefix(input: string): string {
+export function prefix(input: string): string {
     return input ? input.match(/[a-z ]+/i)[0].trim() : '';
 }
 
@@ -30,7 +30,7 @@ interface Profile {
     supportedByVisualStudio2015: boolean;
 }
 
-interface ExtendedFramework {
+export interface ExtendedFramework {
     fullName: string;
     friendlyName: string;
     nugetTarget: string;
@@ -71,12 +71,12 @@ export function getGroups(includeLegacy: boolean): Group[] {
     }));
 }
 
-export function numSelectedGroups(includeLegacy: boolean, selections: { [key: string]: boolean }) : number {
-    return getGroups(includeLegacy).filter(x => x.group.some(y => selections[y.nugetTarget])).length;
+export function numSelectedGroups(includeLegacy: boolean, selections: { [key: string]: string }) : number {
+    return getGroups(includeLegacy).filter(x => selections[x.key]).length;
 }
 
-export function selectedFrameworks(includeLegacy: boolean, selections: { [key: string]: boolean }) : ExtendedFramework[] {
-    return getFrameworks(includeLegacy).filter(x => selections[x.nugetTarget]);
+export function selectedFrameworks(includeLegacy: boolean, selections: { [key: string]: string }) : ExtendedFramework[] {
+    return getFrameworks(includeLegacy).filter(x => selections[prefix(x.nugetTarget)] === x.nugetTarget);
 }
 
 // A profile matches if all of its frameworks are in a group represented by the selected frameworks, AND

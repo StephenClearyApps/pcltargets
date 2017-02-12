@@ -4,7 +4,7 @@ import * as A from './actionTypes';
 import { store } from './store';
 
 const actionCreators = {
-    setFormValue: (name: string, value: boolean): A.SetFormValueAction => ({ type: A.Types.SET_FORM_VALUE, payload: { name, value } }),
+    select: (name: string, selected: boolean): A.SelectAction => ({ type: A.Types.SELECT, payload: { name, selected } }),
     setIncludeLegacy: (value: boolean): A.SetIncludeLegacyAction => ({ type: A.Types.SET_INCLUDE_LEGACY, payload: { value }})
 }
 

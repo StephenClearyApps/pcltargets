@@ -1,13 +1,13 @@
 import { PayloadAction } from './_actions';
 
 export const Types = {
-    SET_FORM_VALUE: 'SET_FORM_VALUE',
+    SELECT: 'SELECT',
     SET_INCLUDE_LEGACY: 'SET_INCLUDE_LEGACY'
 };
 
-export type SetFormValueAction = PayloadAction<{
+export type SelectAction = PayloadAction<{
     name: string;
-    value: boolean;
+    selected: boolean;
 }>;
 
 export type SetIncludeLegacyAction = PayloadAction<{
