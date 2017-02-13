@@ -15,13 +15,13 @@ export function Main({ includeLegacy, selections }: State) {
 
     return (
         <div>
-            <Checkbox checked={includeLegacy} onChange={() => actions.setIncludeLegacy(!includeLegacy)}>Include legacy frameworks ("legacy" means "not supported by VS2015")</Checkbox>
+            <Checkbox checked={includeLegacy} onChange={() => actions.setIncludeLegacy(!includeLegacy)}>Include legacy platforms ("legacy" means "not supported by VS2015")</Checkbox>
             <div>
                 <div>{getGroups(includeLegacy).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
                 <div className="scclear"/>
             </div>
             <Ad/>
-            {numSelectedGroups(includeLegacy, selections) < 2 ? <div>Select frameworks from at least two groups to show the target PCLs.</div> :
+            {numSelectedGroups(includeLegacy, selections) < 2 ? <div>Select platforms from at least two groups to show the target PCLs.</div> :
                 <div>
                     <div>You should support these PCL targets:</div>
                     <ProfileTable profiles={result}/>
