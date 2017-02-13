@@ -15,7 +15,7 @@ export function FrameworkButtonGroup({ group, selections }: FrameworkButtonGroup
         <div>
             <div>{group.friendlyName}</div>
             <ButtonGroup vertical>
-                {group.group.map(x => <FrameworkButton framework={x} selections={selections}/>)}
+                {group.group.map(x => <FrameworkButton key={x.nugetTarget} framework={x} selections={selections}/>)}
             </ButtonGroup>
         </div>
     );
