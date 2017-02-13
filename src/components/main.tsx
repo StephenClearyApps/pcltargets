@@ -21,7 +21,7 @@ export function Main({ includeLegacy, selections }: State) {
                 <div className="scclear"/>
             </div>
             <Ad/>
-            {numSelectedGroups(includeLegacy, selections) < 2 ? <div>Select platforms from at least two groups to show the target PCLs.</div> :
+            {numSelectedGroups(includeLegacy, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
                 <div>
                     <div>You should support these PCL targets:</div>
                     <ProfileTable profiles={result}/>
