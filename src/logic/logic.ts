@@ -23,7 +23,7 @@ interface Framework {
     nugetTarget: string;
 }
 
-interface Profile {
+export interface Profile {
     profileName: string;
     nugetTarget: string;
     frameworks: Framework[];

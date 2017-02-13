@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { ButtonGroup, Button, Checkbox } from 'react-bootstrap';
+import { ButtonGroup, Button, Checkbox, Table } from 'react-bootstrap';
 
-import { Group, ExtendedFramework, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, prefix } from '../logic/logic';
+import { Group, Profile, ExtendedFramework, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, prefix } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
@@ -22,6 +22,27 @@ function group(g: Group, state: State) {
     );
 }
 
+function profileTable(profiles: Profile[]) {
+    return (
+        <Table striped bordered condensed hover>
+            <thead>
+            <tr>
+                <th>Profile</th>
+                <th>NuGet Target</th>
+                <th>Frameworks</th>
+            </tr>
+            </thead>
+            <tbody>
+            {profiles.map(x => <tr>
+                <td>{x.profileName}</td>
+                <td>{x.nugetTarget}</td>
+                <td>{x.frameworks.map(y => y.friendlyName).join(', ')}</td>
+            </tr>)}
+            </tbody>
+        </Table>
+    );
+}
+
 function results(state: State) {
     if (numSelectedGroups(state.includeLegacy, state.selections) < 2)
         return <div>Select frameworks from at least two groups to show the target PCLs.</div>;
@@ -31,9 +52,9 @@ function results(state: State) {
     return (
         <div>
             You should support these PCL targets:
-            {result.map(x => <div key={x.profileName}>{x.profileName} ({x.nugetTarget})</div>)}
+            {profileTable(result)}
             <div>Your library will be compatible with these PCL profiles:</div>
-            {profiles.map(x => <div key={x.profileName}>{x.profileName} ({x.nugetTarget})</div>)}
+            {profileTable(profiles)}
         </div>
     );
 }
@@ -41,7 +62,7 @@ function results(state: State) {
 function MainComponent(props: State) {
     return (
         <div>
-            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy profiles</Checkbox>            
+            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy Frameworks</Checkbox>            
             {getGroups(props.includeLegacy).map(x => group(x, props))}
             {results(props)}
         </div>
