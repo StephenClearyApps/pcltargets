@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ButtonGroup, Checkbox, Table } from 'react-bootstrap';
+import { Checkbox } from 'react-bootstrap';
 
-import { Group, Profile, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
+import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 import { FrameworkButtonGroup } from './FrameworkButtonGroup';
