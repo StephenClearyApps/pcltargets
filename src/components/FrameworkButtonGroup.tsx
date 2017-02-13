@@ -1,0 +1,22 @@
+import * as React from 'react';
+import { ButtonGroup } from 'react-bootstrap';
+
+import { Group } from '../logic/logic';
+import { SelectionsState } from '../reducers';
+import { FrameworkButton } from './FrameworkButton';
+
+export interface FrameworkButtonGroupProps {
+    group: Group;
+    selections: SelectionsState;
+}
+
+export function FrameworkButtonGroup({ group, selections }: FrameworkButtonGroupProps) {
+    return (
+        <div>
+            <div>{group.friendlyName}</div>
+            <ButtonGroup vertical>
+                {group.group.map(x => <FrameworkButton framework={x} selections={selections}/>)}
+            </ButtonGroup>
+        </div>
+    );
+}

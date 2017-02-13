@@ -1,75 +1,46 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { ButtonGroup, Button, Checkbox, Table } from 'react-bootstrap';
+import { ButtonGroup, Checkbox, Table } from 'react-bootstrap';
 
-import { Group, Profile, ExtendedFramework, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, prefix } from '../logic/logic';
+import { Group, Profile, getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
+import { FrameworkButtonGroup } from './FrameworkButtonGroup';
+import { ProfileTable } from './ProfileTable';
 
-function framework(f: ExtendedFramework, state: State) {
-    const selected = state.selections[prefix(f.nugetTarget)] === f.nugetTarget;
-    return <Button key={f.nugetTarget} bsStyle={selected ? "primary" : "default"} onClick={() => actions.select(f.nugetTarget, !selected)}>{f.friendlyName}</Button>;
-}
-
-function group(g: Group, state: State) {
-    return (
-        <div>
-            <div>{g.friendlyName}</div>
-            <ButtonGroup vertical>
-                {g.group.map(x => framework(x, state))}
-            </ButtonGroup>
-        </div>
-    );
-}
-
-function profileTable(profiles: Profile[]) {
-    return (
-        <Table striped bordered condensed hover>
-            <thead>
-            <tr>
-                <th>Profile</th>
-                <th>NuGet Target</th>
-                <th>Frameworks</th>
-            </tr>
-            </thead>
-            <tbody>
-            {profiles.map(x => <tr>
-                <td>{x.profileName}</td>
-                <td>{x.nugetTarget}</td>
-                <td>{x.frameworks.map(y => y.friendlyName).join(', ')}</td>
-            </tr>)}
-            </tbody>
-        </Table>
-    );
-}
-
-function results(state: State) {
-    if (numSelectedGroups(state.includeLegacy, state.selections) < 2)
+function results({ includeLegacy, selections }: State) {
+    if (numSelectedGroups(includeLegacy, selections) < 2)
         return <div>Select frameworks from at least two groups to show the target PCLs.</div>;
-    const frameworks = selectedFrameworks(state.includeLegacy, state.selections);
-    const profiles = findAllPcls(frameworks);
-    const result = removeSubsetPcls(profiles);
+    const frameworks = selectedFrameworks(includeLegacy, selections);
+    const fullResult = findAllPcls(frameworks);
+    const result = removeSubsetPcls(fullResult);
     return (
         <div>
-            You should support these PCL targets:
-            {profileTable(result)}
+            <div>You should support these PCL targets:</div>
+            <ProfileTable profiles={result}/>
             <div>Your library will be compatible with these PCL profiles:</div>
-            {profileTable(profiles)}
+            <ProfileTable profiles={fullResult}/>
         </div>
     );
 }
 
-function MainComponent(props: State) {
+export function Main({ includeLegacy, selections }: State) {
+    const frameworks = selectedFrameworks(includeLegacy, selections);
+    const fullResult = findAllPcls(frameworks);
+    const result = removeSubsetPcls(fullResult);
+
     return (
         <div>
-            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy Frameworks</Checkbox>
+            <Checkbox checked={includeLegacy} onChange={() => actions.setIncludeLegacy(!includeLegacy)}>Include legacy Frameworks</Checkbox>
             <p>
-                <div>{getGroups(props.includeLegacy).map(x => <div key={x.key} className="scleft">{group(x, props)}</div>)}</div>
+                <div>{getGroups(includeLegacy).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
                 <div className="scclear"/>
             </p>
-            {results(props)}
+            <div>
+                <div>You should support at least these PCL targets:</div>
+                <ProfileTable profiles={result}/>
+                <div>Your library will be compatible with these PCL profiles:</div>
+                <ProfileTable profiles={fullResult}/>
+            </div>
         </div>
     );
 }
-
-export const Main = connect(x => x)(MainComponent);

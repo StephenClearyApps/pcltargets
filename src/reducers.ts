@@ -3,11 +3,13 @@ import { handleActions } from 'redux-actions';
 import * as A from './actionTypes';
 import { prefix } from './logic/logic';
 
+export interface SelectionsState {
+    [groupName: string]: string;
+}
+
 export interface State {
     includeLegacy: boolean;
-    selections: {
-        [groupName: string]: string;
-    }
+    selections: SelectionsState;
 }
 
 function select(state: State, action: A.SelectAction): State {
