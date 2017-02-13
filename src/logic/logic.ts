@@ -66,7 +66,7 @@ export function getGroups(includeLegacy: boolean): Group[] {
     const groupedFrameworks = _(frameworks).groupBy(x => prefix(x.nugetTarget)).value();
     return _.keys(groupedFrameworks).map(x => ({
         key: x,
-        group: groupedFrameworks[x],
+        group: groupedFrameworks[x].reverse(),
         friendlyName: prefix(groupedFrameworks[x][0].friendlyName)
     }));
 }

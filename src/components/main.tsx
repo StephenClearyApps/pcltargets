@@ -13,9 +13,9 @@ function framework(f: ExtendedFramework, state: State) {
 
 function group(g: Group, state: State) {
     return (
-        <div key={g.key}>
-            {g.friendlyName}
-            <ButtonGroup>
+        <div>
+            <div>{g.friendlyName}</div>
+            <ButtonGroup vertical>
                 {g.group.map(x => framework(x, state))}
             </ButtonGroup>
         </div>
@@ -62,8 +62,11 @@ function results(state: State) {
 function MainComponent(props: State) {
     return (
         <div>
-            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy Frameworks</Checkbox>            
-            {getGroups(props.includeLegacy).map(x => group(x, props))}
+            <Checkbox checked={props.includeLegacy} onChange={() => actions.setIncludeLegacy(!props.includeLegacy)}>Include legacy Frameworks</Checkbox>
+            <p>
+                <div>{getGroups(props.includeLegacy).map(x => <div key={x.key} className="scleft">{group(x, props)}</div>)}</div>
+                <div className="scclear"/>
+            </p>
             {results(props)}
         </div>
     );
