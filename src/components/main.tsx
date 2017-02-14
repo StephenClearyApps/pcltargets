@@ -20,7 +20,7 @@ export function Main({ includeLegacy, selections }: State) {
                 <div>{getGroups(includeLegacy).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
                 <div className="scclear"/>
             </div>
-            <Ad/>
+            <h2>Results:</h2>
             {numSelectedGroups(includeLegacy, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
                 <div>
                     <div>You should support these PCL targets:</div>
@@ -29,6 +29,8 @@ export function Main({ includeLegacy, selections }: State) {
                     <ProfileTable profiles={fullResult}/>
                 </div>
             }
+            <p>Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
+            <Ad/>
         </div>
     );
 }

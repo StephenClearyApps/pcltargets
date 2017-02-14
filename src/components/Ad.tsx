@@ -23,7 +23,9 @@ export class Ad extends React.Component<void, void> {
 
     render() {
         return (
-            <div style={{ marginTop:20, marginBottom:20, width:'100%' }} className='center-block' dangerouslySetInnerHTML={adSense}/>
+            <div style={{ textAlign: 'center', marginTop:20, marginBottom:20 }}>
+                <div dangerouslySetInnerHTML={adSense}/>
+            </div>
         );
     }
 }
