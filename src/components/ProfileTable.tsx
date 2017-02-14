@@ -14,7 +14,7 @@ export function ProfileTable({ profiles }: ProfileTableProps) {
             <tr>
                 <th>Profile</th>
                 <th>NuGet Target</th>
-                <th>Frameworks</th>
+                <th>Name</th>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@ export function ProfileTable({ profiles }: ProfileTableProps) {
                 <tr key={x.nugetTarget}>
                     <td>{x.profileName}</td>
                     <td>{x.nugetTarget}</td>
-                    <td>{x.frameworks.map(y => y.friendlyName).join(', ')}</td>
+                    <td>{x.displayName}</td>
                 </tr>
                 )}
             </tbody>

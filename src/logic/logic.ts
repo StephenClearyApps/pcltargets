@@ -25,6 +25,7 @@ interface Framework {
 
 export interface Profile {
     profileName: string;
+    displayName: string;
     nugetTarget: string;
     frameworks: Framework[];
     supportedByVisualStudio2015: boolean;
