@@ -2,8 +2,8 @@ import { PayloadAction } from './_actions';
 
 export const Types = {
     SELECT: 'SELECT',
-    SET_INCLUDE_LEGACY_FRAMEWORKS: 'SET_INCLUDE_LEGACY_FRAMEWORKS',
-    SET_INCLUDE_LEGACY_PROFILES: 'SET_INCLUDE_LEGACY_PROFILES'
+    SET_ENLIGHTENMENT: 'SET_ENLIGHTENMENT',
+    SET_VS2012: 'SET_VS2012'
 };
 
 export type SelectAction = PayloadAction<{
@@ -11,10 +11,10 @@ export type SelectAction = PayloadAction<{
     selected: boolean;
 }>;
 
-export type SetIncludeLegacyFrameworksAction = PayloadAction<{
+export type SetEnlightenmentAction = PayloadAction<{
     value: boolean;
 }>;
 
-export type SetIncludeLegacyProfilesAction = PayloadAction<{
+export type SetVS2012Action = PayloadAction<{
     value: boolean;
 }>;
