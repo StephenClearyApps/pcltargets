@@ -122,5 +122,5 @@ export function removeSubsetPcls(profiles: Profile[]) : Profile[] {
 }
 
 export function netstandardVersion(selections: { [key: string]: string }) : string {
-    return _(selectedFrameworks(true, selections)).map(x => x.netStandard).filter(x => !!x).min();
+    return _(selectedFrameworks(true, selections)).map(x => x.netStandard || 'netstandard1.0').min();
 }
