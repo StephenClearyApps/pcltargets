@@ -2,7 +2,7 @@ import { PayloadAction } from './_actions';
 
 export const Types = {
     SELECT: 'SELECT',
-    SET_INCLUDE_LEGACY: 'SET_INCLUDE_LEGACY'
+    SET_INCLUDE_LEGACY_FRAMEWORKS: 'SET_INCLUDE_LEGACY_FRAMEWORKS'
 };
 
 export type SelectAction = PayloadAction<{
@@ -10,6 +10,6 @@ export type SelectAction = PayloadAction<{
     selected: boolean;
 }>;
 
-export type SetIncludeLegacyAction = PayloadAction<{
+export type SetIncludeLegacyFrameworksAction = PayloadAction<{
     value: boolean;
 }>;

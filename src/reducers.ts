@@ -8,7 +8,7 @@ export interface SelectionsState {
 }
 
 export interface State {
-    includeLegacy: boolean;
+    includeLegacyFrameworks: boolean;
     selections: SelectionsState;
 }
 
@@ -20,17 +20,17 @@ function select(state: State, action: A.SelectAction): State {
     };
 }
 
-function setIncludeLegacy(state: State, action: A.SetIncludeLegacyAction): State {
+function setIncludeLegacyFrameworks(state: State, action: A.SetIncludeLegacyFrameworksAction): State {
     return { ...state,
-        includeLegacy: action.payload.value,
+        includeLegacyFrameworks: action.payload.value,
         selections: { }
     };
 }
 
 export const reducers = (handleActions as ReduxActionsFixed.HandleActions<State>)({
     [A.Types.SELECT]: select,
-    [A.Types.SET_INCLUDE_LEGACY]: setIncludeLegacy
+    [A.Types.SET_INCLUDE_LEGACY_FRAMEWORKS]: setIncludeLegacyFrameworks
 }, {
-    includeLegacy: true,
+    includeLegacyFrameworks: true,
     selections: { }
 });

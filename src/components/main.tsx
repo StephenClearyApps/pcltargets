@@ -8,20 +8,20 @@ import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSu
 import { State } from '../reducers';
 import { actions } from '../actions';
 
-export function Main({ includeLegacy, selections }: State) {
-    const frameworks = selectedFrameworks(includeLegacy, selections);
-    const fullResult = findAllPcls(frameworks);
+export function Main({ includeLegacyFrameworks, selections }: State) {
+    const frameworks = selectedFrameworks(includeLegacyFrameworks, selections);
+    const fullResult = findAllPcls(false, frameworks);
     const result = removeSubsetPcls(fullResult);
 
     return (
         <div>
-            <Checkbox checked={includeLegacy} onChange={() => actions.setIncludeLegacy(!includeLegacy)}>Include legacy platforms ("legacy" means "not supported by VS2015")</Checkbox>
+            <Checkbox checked={includeLegacyFrameworks} onChange={() => actions.setIncludeLegacyFrameworks(!includeLegacyFrameworks)}>Include legacy platform versions ("legacy" means <a href="https://www.visualstudio.com/en-us/productinfo/vs2015-compatibility-vs">not supported by VS2015</a>)</Checkbox>
             <div>
-                <div>{getGroups(includeLegacy).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
+                <div>{getGroups(includeLegacyFrameworks).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
                 <div className="scclear"/>
             </div>
             <h2>Results:</h2>
-            {numSelectedGroups(includeLegacy, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
+            {numSelectedGroups(includeLegacyFrameworks, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
                 <div>
                     <div>You should support these PCL targets:</div>
                     <ProfileTable profiles={result}/>

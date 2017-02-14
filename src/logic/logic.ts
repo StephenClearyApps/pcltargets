@@ -53,12 +53,19 @@ function extendFramework(framework: Framework) : ExtendedFramework {
 
 const nugetCompatibleData = data.filter(x => x.nugetTarget);
 
-function isLegacy(p: Profile): boolean {
-    return !p.supportedByVisualStudio2015 || p.frameworks.some(f => f.nugetTarget === 'win8');
+function isLegacyFramework(f: Framework) : boolean {
+    return f.nugetTarget === 'sl4' ||
+        f.nugetTarget === 'win8' ||
+        f.nugetTarget === 'wp71' ||
+        f.nugetTarget === 'wp7';
+}
+
+function isLegacyProfile(p: Profile) : boolean {
+    return !p.supportedByVisualStudio2015;
 }
 
 function getFrameworks(includeLegacy: boolean): ExtendedFramework[] {
-    return _(nugetCompatibleData).filter(x => includeLegacy || !isLegacy(x)).flatMap(x => x.frameworks).uniqBy(x => x.fullName).sortBy(x => x.nugetTarget).map(extendFramework).value();
+    return _(nugetCompatibleData).flatMap(x => x.frameworks).uniqBy(x => x.fullName).filter(x => includeLegacy || !isLegacyFramework(x)).sortBy(x => x.nugetTarget).map(extendFramework).value();
 }
 
 export function getGroups(includeLegacy: boolean): Group[] {
@@ -92,8 +99,8 @@ function profileMatch(profile: Profile, frameworks: ExtendedFramework[]) : boole
     return true;
 }
 
-export function findAllPcls(frameworks: ExtendedFramework[]) : Profile[] {
-    return data.filter(x => x.nugetTarget && profileMatch(x, frameworks));
+export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramework[]) : Profile[] {
+    return nugetCompatibleData.filter(x => (includeLegacy || !isLegacyProfile(x)) && profileMatch(x, frameworks));
 }
 
 export function removeSubsetPcls(profiles: Profile[]) : Profile[] {

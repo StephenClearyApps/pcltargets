@@ -5,7 +5,7 @@ import { store } from './store';
 
 const actionCreators = {
     select: (name: string, selected: boolean): A.SelectAction => ({ type: A.Types.SELECT, payload: { name, selected } }),
-    setIncludeLegacy: (value: boolean): A.SetIncludeLegacyAction => ({ type: A.Types.SET_INCLUDE_LEGACY, payload: { value }})
+    setIncludeLegacyFrameworks: (value: boolean): A.SetIncludeLegacyFrameworksAction => ({ type: A.Types.SET_INCLUDE_LEGACY_FRAMEWORKS, payload: { value }})
 }
 
 export const actions = bindActionCreators(actionCreators, store.dispatch);

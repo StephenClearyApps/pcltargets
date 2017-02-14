@@ -18,7 +18,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -28,7 +28,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0,Profile=WindowsPhone*",
         "friendlyName": "Windows Phone Silverlight 7.0",
-        "nugetTarget": "wp70"
+        "nugetTarget": "wp7"
       },
       {
         "fullName": "Xbox,Version=v4.0,Profile=*",
@@ -44,7 +44,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": false,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net4+sl40+win8+wp70",
+    "nugetTarget": "portable-net4+sl4+win8+wp7",
     "netStandard": null,
     "frameworks": [
       {
@@ -55,7 +55,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -65,7 +65,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0,Profile=WindowsPhone*",
         "friendlyName": "Windows Phone Silverlight 7.0",
-        "nugetTarget": "wp70"
+        "nugetTarget": "wp7"
       }
     ]
   },
@@ -76,7 +76,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net4+sl40",
+    "nugetTarget": "portable-net4+sl4",
     "netStandard": null,
     "frameworks": [
       {
@@ -87,7 +87,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       }
     ]
   },
@@ -98,7 +98,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": false,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net45+sl40+win8+wp70",
+    "nugetTarget": "portable-net45+sl4+win8+wp7",
     "netStandard": null,
     "frameworks": [
       {
@@ -109,7 +109,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -119,7 +119,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0,Profile=WindowsPhone*",
         "friendlyName": "Windows Phone Silverlight 7.0",
-        "nugetTarget": "wp70"
+        "nugetTarget": "wp7"
       }
     ]
   },
@@ -196,7 +196,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net4+sl50",
+    "nugetTarget": "portable-net4+sl5",
     "netStandard": null,
     "frameworks": [
       {
@@ -207,7 +207,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       }
     ]
   },
@@ -218,7 +218,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net403+sl40",
+    "nugetTarget": "portable-net403+sl4",
     "netStandard": null,
     "frameworks": [
       {
@@ -229,7 +229,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       }
     ]
   },
@@ -240,7 +240,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net403+sl50",
+    "nugetTarget": "portable-net403+sl5",
     "netStandard": null,
     "frameworks": [
       {
@@ -251,7 +251,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       }
     ]
   },
@@ -262,7 +262,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net45+sl40",
+    "nugetTarget": "portable-net45+sl4",
     "netStandard": null,
     "frameworks": [
       {
@@ -273,7 +273,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       }
     ]
   },
@@ -284,7 +284,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net45+sl50",
+    "nugetTarget": "portable-net45+sl5",
     "netStandard": null,
     "frameworks": [
       {
@@ -295,7 +295,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       }
     ]
   },
@@ -350,7 +350,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net4+sl40+win8+wp8",
+    "nugetTarget": "portable-net4+sl4+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -361,7 +361,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -382,7 +382,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net4+sl50+win8",
+    "nugetTarget": "portable-net4+sl5+win8",
     "netStandard": null,
     "frameworks": [
       {
@@ -393,7 +393,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -409,7 +409,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net403+sl40+win8",
+    "nugetTarget": "portable-net403+sl4+win8",
     "netStandard": null,
     "frameworks": [
       {
@@ -420,7 +420,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -436,7 +436,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net403+sl50+win8",
+    "nugetTarget": "portable-net403+sl5+win8",
     "netStandard": null,
     "frameworks": [
       {
@@ -447,7 +447,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -485,7 +485,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net45+sl40+win8",
+    "nugetTarget": "portable-net45+sl4+win8",
     "netStandard": null,
     "frameworks": [
       {
@@ -496,7 +496,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -512,7 +512,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net45+sl50+win8",
+    "nugetTarget": "portable-net45+sl5+win8",
     "netStandard": null,
     "frameworks": [
       {
@@ -523,7 +523,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -610,7 +610,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net4+sl40+win8+wp71",
+    "nugetTarget": "portable-net4+sl4+win8+wp71",
     "netStandard": null,
     "frameworks": [
       {
@@ -621,7 +621,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -669,7 +669,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": false,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net403+sl40+win8+wp70",
+    "nugetTarget": "portable-net403+sl4+win8+wp7",
     "netStandard": null,
     "frameworks": [
       {
@@ -680,7 +680,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -690,7 +690,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0,Profile=WindowsPhone*",
         "friendlyName": "Windows Phone Silverlight 7.0",
-        "nugetTarget": "wp70"
+        "nugetTarget": "wp7"
       }
     ]
   },
@@ -701,7 +701,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net403+sl40+win8+wp71",
+    "nugetTarget": "portable-net403+sl4+win8+wp71",
     "netStandard": null,
     "frameworks": [
       {
@@ -712,7 +712,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -760,7 +760,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net45+sl40+win8+wp71",
+    "nugetTarget": "portable-net45+sl4+win8+wp71",
     "netStandard": null,
     "frameworks": [
       {
@@ -771,7 +771,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -830,7 +830,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -840,7 +840,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0,Profile=WindowsPhone*",
         "friendlyName": "Windows Phone Silverlight 7.0",
-        "nugetTarget": "wp70"
+        "nugetTarget": "wp7"
       },
       {
         "fullName": "Xbox,Version=v4.0,Profile=*",
@@ -856,7 +856,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net4+sl50+win8+wp8",
+    "nugetTarget": "portable-net4+sl5+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -867,7 +867,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -888,7 +888,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net403+sl40+win8+wp8",
+    "nugetTarget": "portable-net403+sl4+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -899,7 +899,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -920,7 +920,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net403+sl50+win8+wp8",
+    "nugetTarget": "portable-net403+sl5+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -931,7 +931,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -979,7 +979,7 @@ export const data =
     "supportedByVisualStudio2015": false,
     "supportsAsync": true,
     "supportsGenericVariance": false,
-    "nugetTarget": "portable-net45+sl40+win8+wp8",
+    "nugetTarget": "portable-net45+sl4+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -990,7 +990,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v4.0",
         "friendlyName": "Silverlight 4.0",
-        "nugetTarget": "sl40"
+        "nugetTarget": "sl4"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1038,7 +1038,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net45+sl50+win8+wp8",
+    "nugetTarget": "portable-net45+sl5+win8+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -1049,7 +1049,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1070,7 +1070,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net4+sl50+win8+wpa81",
+    "nugetTarget": "portable-net4+sl5+win8+wpa81",
     "netStandard": null,
     "frameworks": [
       {
@@ -1081,7 +1081,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1102,7 +1102,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net403+sl50+win8+wpa81",
+    "nugetTarget": "portable-net403+sl5+win8+wpa81",
     "netStandard": null,
     "frameworks": [
       {
@@ -1113,7 +1113,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1134,7 +1134,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net45+sl50+win8+wpa81",
+    "nugetTarget": "portable-net45+sl5+win8+wpa81",
     "netStandard": null,
     "frameworks": [
       {
@@ -1145,7 +1145,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1198,7 +1198,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net4+sl50+win8+wpa81+wp8",
+    "nugetTarget": "portable-net4+sl5+win8+wpa81+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -1209,7 +1209,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1235,7 +1235,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net403+sl50+win8+wpa81+wp8",
+    "nugetTarget": "portable-net403+sl5+win8+wpa81+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -1246,7 +1246,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
@@ -1272,7 +1272,7 @@ export const data =
     "supportedByVisualStudio2015": true,
     "supportsAsync": true,
     "supportsGenericVariance": true,
-    "nugetTarget": "portable-net45+sl50+win8+wpa81+wp8",
+    "nugetTarget": "portable-net45+sl5+win8+wpa81+wp8",
     "netStandard": null,
     "frameworks": [
       {
@@ -1283,7 +1283,7 @@ export const data =
       {
         "fullName": "Silverlight,Version=v5.0",
         "friendlyName": "Silverlight 5.0",
-        "nugetTarget": "sl50"
+        "nugetTarget": "sl5"
       },
       {
         "fullName": ".NETCore,Version=v4.5,Profile=*",
