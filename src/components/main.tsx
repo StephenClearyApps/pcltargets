@@ -4,7 +4,7 @@ import { Checkbox } from 'react-bootstrap';
 import { FrameworkButtonGroup } from './FrameworkButtonGroup';
 import { ProfileTable } from './ProfileTable';
 import { Ad } from './Ad';
-import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls } from '../logic/logic';
+import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
@@ -12,6 +12,7 @@ export function Main({ includeLegacyFrameworks, includeLegacyProfiles, selection
     const frameworks = selectedFrameworks(includeLegacyFrameworks, selections);
     const fullResult = findAllPcls(includeLegacyProfiles, frameworks);
     const result = removeSubsetPcls(fullResult);
+    const netstandard = netstandardVersion(selections);
 
     return (
         <div>
@@ -29,7 +30,7 @@ export function Main({ includeLegacyFrameworks, includeLegacyProfiles, selection
             <h2>Results:</h2>
             {numSelectedGroups(includeLegacyFrameworks, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
                 <div>
-                    <div>You should support these PCL targets:</div>
+                    <div>You should support {netstandard ? netstandard + " and" : null} these PCL targets:</div>
                     <ProfileTable profiles={result}/>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={fullResult}/>

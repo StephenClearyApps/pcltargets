@@ -21,6 +21,7 @@ interface Framework {
     fullName: string;
     friendlyName: string;
     nugetTarget: string;
+    netStandard: string;
 }
 
 export interface Profile {
@@ -31,10 +32,7 @@ export interface Profile {
     supportedByVisualStudio2015: boolean;
 }
 
-export interface ExtendedFramework {
-    fullName: string;
-    friendlyName: string;
-    nugetTarget: string;
+export interface ExtendedFramework extends Framework {
     prefix: string;
     version: number;
 }
@@ -121,4 +119,8 @@ export function removeSubsetPcls(profiles: Profile[]) : Profile[] {
             result.push(p);
     }
     return result;
+}
+
+export function netstandardVersion(selections: { [key: string]: string }) : string {
+    return _(selectedFrameworks(true, selections)).map(x => x.netStandard).filter(x => !!x).min();
 }
