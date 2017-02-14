@@ -29,7 +29,7 @@ export function Main({ includeLegacy, selections }: State) {
                     <ProfileTable profiles={fullResult}/>
                 </div>
             }
-            <p>Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
+            <p>By <a href="http://stephencleary.com">Stephen Cleary</a>. Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
             <Ad/>
         </div>
     );
