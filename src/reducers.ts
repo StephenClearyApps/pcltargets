@@ -9,6 +9,7 @@ export interface SelectionsState {
 
 export interface State {
     includeLegacyFrameworks: boolean;
+    includeLegacyProfiles: boolean;
     selections: SelectionsState;
 }
 
@@ -27,10 +28,18 @@ function setIncludeLegacyFrameworks(state: State, action: A.SetIncludeLegacyFram
     };
 }
 
+function setIncludeLegacyProfiles(state: State, action: A.SetIncludeLegacyProfilesAction): State {
+    return { ...state,
+        includeLegacyProfiles: action.payload.value
+    };
+}
+
 export const reducers = (handleActions as ReduxActionsFixed.HandleActions<State>)({
     [A.Types.SELECT]: select,
-    [A.Types.SET_INCLUDE_LEGACY_FRAMEWORKS]: setIncludeLegacyFrameworks
+    [A.Types.SET_INCLUDE_LEGACY_FRAMEWORKS]: setIncludeLegacyFrameworks,
+    [A.Types.SET_INCLUDE_LEGACY_PROFILES]: setIncludeLegacyProfiles
 }, {
     includeLegacyFrameworks: true,
+    includeLegacyProfiles: false,
     selections: { }
 });
