@@ -99,8 +99,12 @@ function profileMatch(profile: Profile, frameworks: ExtendedFramework[]): boolea
     return true;
 }
 
+function validProfiles(includeLegacy: boolean): Profile[] {
+    return nugetCompatibleData.filter(x => (includeLegacy || !isLegacyProfile(x)));
+}
+
 export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramework[]): Profile[] {
-    return nugetCompatibleData.filter(x => (includeLegacy || !isLegacyProfile(x)) && profileMatch(x, frameworks));
+    return validProfiles(includeLegacy).filter(x => profileMatch(x, frameworks));
 }
 
 export function removeSubsetPcls(profiles: Profile[]): Profile[] {
@@ -141,4 +145,67 @@ function combinations<T>(array: T[], k: number): T[][] {
         }
     }
     return ret;
+}
+
+interface ProfileSet {
+    profiles: Profile[];
+    frameworks: ExtendedFramework[];
+}
+
+// A profile set matches if, for each selected framework, there is at least one profile in the set that
+//  has a framework version less than or equal to that selected framework.
+function profileSetMatch(set: ProfileSet, frameworks: ExtendedFramework[]): boolean {
+    for (let f of frameworks) {
+        if (!set.frameworks.some(x => x.prefix === f.prefix && x.version <= f.version))
+            return false;
+    }
+    return true;
+}
+
+function alternateProfileGroup(profiles: Profile[], k: number, frameworks: ExtendedFramework[]): Profile[][] {
+    let ret: ProfileSet[] = [];
+    for (let combination of combinations(profiles, k)) {
+        const set = {
+            profiles: combination,
+            frameworks: _(combination).flatMap(x => x.frameworks).map(extendFramework).value()
+        };
+        if (!profileSetMatch(set, frameworks))
+            continue;
+        if (removeSubsetPcls(set.profiles).length !== set.profiles.length)
+            continue;
+        ret.push(set);
+    }
+    ret = _(ret).sortBy(x => _(x.frameworks).map(y => y.prefix).uniq().value().length, x => x.frameworks.length).value();
+    // TODO: also sort by how close the versions are to the selected versions.
+    return ret.map(x => x.profiles);
+}
+
+function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
+    const result: Profile[][] = [];
+    for (let g of profiles) {
+        let ok = true;
+        for (let other of profiles.filter(x => x !== g)) {
+            // If the other one has all the same framework groups with lower versions for each, than this one is a strict subset of other, and the other should be removed.
+            const pf = _(g).flatMap(x => x.frameworks).map(extendFramework).value();
+            const otherf = _(other).flatMap(x => x.frameworks).map(extendFramework).value();
+            if (!pf.every(f => otherf.some(o => f.prefix === o.prefix && o.version <= f.version))) {
+                ok = false;
+                break;
+            }
+        }
+        if (ok)
+            result.push(g);
+    }
+    return result;
+}
+
+export function alternateProfiles(includeLegacy: boolean, n: number, frameworks: ExtendedFramework[]): Profile[][] {
+    const profiles = validProfiles(includeLegacy);
+    for (let k = 1; k < n; ++k) {
+        const ret = alternateProfileGroup(profiles, k, frameworks);
+        if (ret.length === 0)
+            continue;
+        return removeSubsetPclGroups(ret);
+    }
+    return [];
 }

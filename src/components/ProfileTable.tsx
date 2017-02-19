@@ -5,9 +5,10 @@ import { Profile } from '../logic/logic';
 
 export interface ProfileTableProps {
     profiles: Profile[];
+    nugetTarget?: string;
 }
 
-export function ProfileTable({ profiles }: ProfileTableProps) {
+export function ProfileTable({ profiles, nugetTarget }: ProfileTableProps) {
     return (
         <Table striped bordered condensed hover>
             <thead>
@@ -21,7 +22,7 @@ export function ProfileTable({ profiles }: ProfileTableProps) {
                 {profiles.map(x =>
                 <tr key={x.nugetTarget}>
                     <td>{x.profileName}</td>
-                    <td>{x.nugetTarget}</td>
+                    <td>{nugetTarget || x.nugetTarget}</td>
                     <td>{x.displayName}</td>
                 </tr>
                 )}

@@ -1,10 +1,12 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { Checkbox } from 'react-bootstrap';
 
 import { FrameworkButtonGroup } from './FrameworkButtonGroup';
 import { ProfileTable } from './ProfileTable';
+import { AlternateResult } from './AlternateResult';
 import { Ad } from './Ad';
-import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion } from '../logic/logic';
+import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion, alternateProfiles } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
@@ -13,6 +15,7 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
     const fullResult = findAllPcls(includeLegacyProfiles, frameworks);
     const result = removeSubsetPcls(fullResult);
     const netstandard = netstandardVersion(selections);
+    const alternates = alternateProfiles(includeLegacyProfiles, result.length, frameworks);
 
     return (
         <div>
@@ -30,6 +33,7 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
                     <ProfileTable profiles={result}/>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={fullResult}/>
+                    {_(alternates).map(x => <AlternateResult profiles={x} nugetTarget={'portable-' + frameworks.map(y => y.nugetTarget).join('+')}/>).value()}
                 </div>
             }
             <p>By <a href="http://stephencleary.com">Stephen Cleary</a>. Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
