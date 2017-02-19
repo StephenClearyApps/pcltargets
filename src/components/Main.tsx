@@ -15,7 +15,7 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
     const fullResult = findAllPcls(includeLegacyProfiles, frameworks);
     const result = removeSubsetPcls(fullResult);
     const netstandard = netstandardVersion(selections);
-    const alternates = alternateProfiles(includeLegacyProfiles, result.length, frameworks);
+    const alternates = usesEnlightenment ? alternateProfiles(includeLegacyProfiles, result.length, frameworks) : [];
 
     return (
         <div>
@@ -26,14 +26,16 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
                 <div>{getGroups(includeLegacyFrameworks).map(x => <div key={x.key} className="scleft"><FrameworkButtonGroup group={x} selections={selections}/></div>)}</div>
                 <div className="scclear"/>
             </div>
-            <h2>Results:</h2>
-            {numSelectedGroups(includeLegacyFrameworks, selections) < 2 ? <p>Select platforms from at least two groups to show the target PCLs.</p> :
+            <h2>Results</h2>
+            {result.length === 0 ? <p>Select more platforms to show PCL results.</p> :
                 <div>
+                    <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
                     <ProfileTable profiles={result}/>
+                    {_(alternates).map(x => <AlternateResult profiles={x} nugetTarget={'portable-' + frameworks.map(y => y.nugetTarget).join('+')}/>).value()}
+                    <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={fullResult}/>
-                    {_(alternates).map(x => <AlternateResult profiles={x} nugetTarget={'portable-' + frameworks.map(y => y.nugetTarget).join('+')}/>).value()}
                 </div>
             }
             <p>By <a href="http://stephencleary.com">Stephen Cleary</a>. Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
