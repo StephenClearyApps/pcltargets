@@ -15,7 +15,7 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
     const fullResult = findAllPcls(includeLegacyProfiles, frameworks);
     const result = removeSubsetPcls(fullResult);
     const netstandard = netstandardVersion(selections);
-    const alternates = usesEnlightenment ? alternateProfiles(includeLegacyProfiles, result.length, frameworks) : [];
+    const alternates = usesEnlightenment ? alternateProfiles(includeLegacyProfiles, result.length, frameworks, result) : [];
 
     return (
         <div>
@@ -32,7 +32,7 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
                     <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
                     <ProfileTable profiles={result}/>
-                    {_(alternates).map(x => <AlternateResult profiles={x} nugetTarget={'portable-' + frameworks.map(y => y.nugetTarget).join('+')}/>).value()}
+                    {_(alternates).flatMap(x => x).map(x => <AlternateResult profiles={x} nugetTargets={frameworks.map(y => y.nugetTarget)}/>).value()}
                     <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={fullResult}/>

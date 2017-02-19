@@ -1,20 +1,35 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { Table } from 'react-bootstrap';
 
-import { Profile } from '../logic/logic';
+import { Profile, Framework, prefix } from '../logic/logic';
 
 export interface ProfileTableProps {
     profiles: Profile[];
-    nugetTarget?: string;
+    nugetTargets?: string[];
 }
 
-export function ProfileTable({ profiles, nugetTarget }: ProfileTableProps) {
+function frameworkNugetTarget(f: Framework, nugetTargets: string[]): string {
+    for (let t of nugetTargets) {
+        if (prefix(f.nugetTarget) === prefix(t))
+            return t;
+    }
+    return null;
+}
+
+function nugetTarget(p: Profile, nugetTargets: string[]): string {
+    if (!nugetTargets)
+        return p.nugetTarget;
+    return 'portable-' + _(p.frameworks).map(x => frameworkNugetTarget(x, nugetTargets)).filter(x => x !== null).value().join('+');
+}
+
+export function ProfileTable({ profiles, nugetTargets }: ProfileTableProps) {
     return (
         <Table striped bordered condensed hover>
             <thead>
             <tr>
                 <th>Profile</th>
-                <th>NuGet Target</th>
+                <th>{nugetTargets ? 'Special NuGet Target' : 'NuGet Target'}</th>
                 <th>Name</th>
             </tr>
             </thead>
@@ -22,7 +37,7 @@ export function ProfileTable({ profiles, nugetTarget }: ProfileTableProps) {
                 {profiles.map(x =>
                 <tr key={x.nugetTarget}>
                     <td>{x.profileName}</td>
-                    <td>{nugetTarget || x.nugetTarget}</td>
+                    <td>{nugetTarget(x, nugetTargets)}</td>
                     <td>{x.displayName}</td>
                 </tr>
                 )}

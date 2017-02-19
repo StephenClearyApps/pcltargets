@@ -17,7 +17,7 @@ function version(input: string): number {
     return result * 100;
 }
 
-interface Framework {
+export interface Framework {
     fullName: string;
     friendlyName: string;
     nugetTarget: string;
@@ -107,15 +107,21 @@ export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramewor
     return validProfiles(includeLegacy).filter(x => profileMatch(x, frameworks));
 }
 
+/** Determines whether 'child' is a subset of 'parent'. */
+function pclIsSebset(parent: Profile, child: Profile): boolean {
+    // 'child' is a subset of 'parent' if 'parent' has all the same framework groups as 'child', with lesser (or equal) versions.
+    const childf = child.frameworks.map(extendFramework);
+    const parentf = parent.frameworks.map(extendFramework);
+    return childf.every(c => parentf.some(p => c.prefix === p.prefix && p.version <= c.version));
+}
+
 export function removeSubsetPcls(profiles: Profile[]): Profile[] {
     const result: Profile[] = [];
     for (let p of profiles) {
         let ok = true;
         for (let other of profiles.filter(x => x !== p)) {
-            // If the other one has all the same framework groups with lower versions for each, than this one is a strict subset of other, and should be removed.
-            const pf = p.frameworks.map(extendFramework);
-            const otherf = other.frameworks.map(extendFramework);
-            if (pf.every(f => otherf.some(o => f.prefix === o.prefix && o.version <= f.version))) {
+            // If this one is a strict subset of other, then it should be removed.
+            if (pclIsSebset(other, p)) {
                 ok = false;
                 break;
             }
@@ -152,31 +158,26 @@ interface ProfileSet {
     frameworks: ExtendedFramework[];
 }
 
-// A profile set matches if, for each selected framework, there is at least one profile in the set that
-//  has a framework version less than or equal to that selected framework.
-function profileSetMatch(set: ProfileSet, frameworks: ExtendedFramework[]): boolean {
-    for (let f of frameworks) {
-        if (!set.frameworks.some(x => x.prefix === f.prefix && x.version <= f.version))
-            return false;
-    }
-    return true;
+// A profile set matches if every result profile is a subset of one of the alternative result profiles.
+function profileSetMatch(alternativeResultProfiles: Profile[], resultProfiles: Profile[]): boolean {
+    return resultProfiles.every(r => alternativeResultProfiles.some(a => pclIsSebset(a, r)));
 }
 
-function alternateProfileGroup(profiles: Profile[], k: number, frameworks: ExtendedFramework[]): Profile[][] {
+function alternateProfileGroup(profiles: Profile[], k: number, frameworks: ExtendedFramework[], resultProfiles: Profile[]): Profile[][] {
     let ret: ProfileSet[] = [];
     for (let combination of combinations(profiles, k)) {
         const set = {
             profiles: combination,
             frameworks: _(combination).flatMap(x => x.frameworks).map(extendFramework).value()
         };
-        if (!profileSetMatch(set, frameworks))
+        if (!profileSetMatch(set.profiles, resultProfiles))
             continue;
         if (removeSubsetPcls(set.profiles).length !== set.profiles.length)
             continue;
         ret.push(set);
     }
     ret = _(ret).sortBy(x => _(x.frameworks).map(y => y.prefix).uniq().value().length, x => x.frameworks.length).value();
-    // TODO: also sort by how close the versions are to the selected versions.
+    // We could also sort by how close the versions are to the selected versions, if there's ever too many results.
     return ret.map(x => x.profiles);
 }
 
@@ -199,13 +200,19 @@ function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
     return result;
 }
 
-export function alternateProfiles(includeLegacy: boolean, n: number, frameworks: ExtendedFramework[]): Profile[][] {
+export function alternateProfiles(includeLegacy: boolean, n: number, frameworks: ExtendedFramework[], resultProfiles: Profile[]): Profile[][][] {
     const profiles = validProfiles(includeLegacy);
+    const ret: Profile[][][] = [];
     for (let k = 1; k < n; ++k) {
-        const ret = alternateProfileGroup(profiles, k, frameworks);
-        if (ret.length === 0)
-            continue;
-        return removeSubsetPclGroups(ret);
+        const set = alternateProfileGroup(profiles, k, frameworks, resultProfiles);
+        if (set.length !== 0)
+            ret.push(removeSubsetPclGroups(set));
     }
-    return [];
+    return ret;
 }
+
+// TODO: Alternative logic is wrong for this scenario:
+//  .NET 4.5, SL5, Win8.1, WP7.5, WPA8.1
+// Primary includes portable-net451+win81+wpa81
+// First alternative is portable-win81+wpa81, portable-net45+sl5+win81+wp71
+// Need to ensure each alternative set consumes all primary PCLs.
