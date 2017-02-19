@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions';
 
 import * as A from './actionTypes';
-import { prefix, selectedFrameworks } from './logic/logic';
+import { selectedFrameworks } from './logic/logic';
+import { prefix } from './logic/extendedFramework';
 
 export interface SelectionsState {
     [groupName: string]: string;

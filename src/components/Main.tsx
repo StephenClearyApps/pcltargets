@@ -6,7 +6,7 @@ import { FrameworkButtonGroup } from './FrameworkButtonGroup';
 import { ProfileTable } from './ProfileTable';
 import { AlternateResult } from './AlternateResult';
 import { Ad } from './Ad';
-import { getGroups, numSelectedGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion, alternateProfiles } from '../logic/logic';
+import { getGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion, alternateProfiles } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 

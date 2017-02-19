@@ -1,40 +1,14 @@
 import * as _ from 'lodash';
 
-// Note: nugetTarget is empty for the XBox framework.
-
-import { data } from './data';
-
-export function prefix(input: string): string {
-    return input ? input.match(/[a-z ]+/i)[0].trim() : '';
-}
-
-function version(input: string): number {
-    var result = input ? parseInt(input.match(/[0-9]+/)[0]) : 0;
-    if (result > 100)
-        return result;
-    if (result > 10)
-        return result * 10;
-    return result * 100;
-}
-
-export interface Framework {
-    fullName: string;
-    friendlyName: string;
-    nugetTarget: string;
-    netStandard: string;
-}
+import { processedData } from './processedData';
+import { ExtendedFramework, prefix } from './extendedFramework';
 
 export interface Profile {
     profileName: string;
     displayName: string;
     nugetTarget: string;
-    frameworks: Framework[];
+    frameworks: ExtendedFramework[];
     supportedByVisualStudio2015: boolean;
-}
-
-export interface ExtendedFramework extends Framework {
-    prefix: string;
-    version: number;
 }
 
 export interface Group {
@@ -43,17 +17,7 @@ export interface Group {
     friendlyName: string;
 }
 
-function extendFramework(framework: Framework): ExtendedFramework {
-    return {
-        ...framework,
-        prefix: prefix(framework.nugetTarget),
-        version: version(framework.nugetTarget)
-    };
-}
-
-const nugetCompatibleData = data.filter(x => x.nugetTarget);
-
-function isLegacyFramework(f: Framework): boolean {
+function isLegacyFramework(f: ExtendedFramework): boolean {
     return f.nugetTarget === 'sl4' ||
         f.nugetTarget === 'win8' ||
         f.nugetTarget === 'wp71' ||
@@ -65,7 +29,7 @@ function isLegacyProfile(p: Profile): boolean {
 }
 
 function getFrameworks(includeLegacy: boolean): ExtendedFramework[] {
-    return _(nugetCompatibleData).flatMap(x => x.frameworks).uniqBy(x => x.fullName).filter(x => includeLegacy || !isLegacyFramework(x)).sortBy(x => x.nugetTarget).map(extendFramework).value();
+    return _(processedData).flatMap(x => x.frameworks).uniqBy(x => x.fullName).filter(x => includeLegacy || !isLegacyFramework(x)).sortBy(x => x.nugetTarget).value();
 }
 
 export function getGroups(includeLegacy: boolean): Group[] {
@@ -78,10 +42,6 @@ export function getGroups(includeLegacy: boolean): Group[] {
     }));
 }
 
-export function numSelectedGroups(includeLegacy: boolean, selections: { [key: string]: string }): number {
-    return getGroups(includeLegacy).filter(x => selections[x.key]).length;
-}
-
 export function selectedFrameworks(includeLegacy: boolean, selections: { [key: string]: string }): ExtendedFramework[] {
     return getFrameworks(includeLegacy).filter(x => selections[prefix(x.nugetTarget)] === x.nugetTarget);
 }
@@ -89,7 +49,7 @@ export function selectedFrameworks(includeLegacy: boolean, selections: { [key: s
 // A profile matches if all of its frameworks are in a group represented by the selected frameworks, AND
 //  if its framework version is greater than or equal to a selected framework in that group.
 function profileMatch(profile: Profile, frameworks: ExtendedFramework[]): boolean {
-    for (let f of profile.frameworks.map(extendFramework)) {
+    for (let f of profile.frameworks) {
         let matches = frameworks.filter(x => x.prefix === f.prefix);
         if (matches.length === 0)
             return false;
@@ -100,7 +60,7 @@ function profileMatch(profile: Profile, frameworks: ExtendedFramework[]): boolea
 }
 
 function validProfiles(includeLegacy: boolean): Profile[] {
-    return nugetCompatibleData.filter(x => (includeLegacy || !isLegacyProfile(x)));
+    return processedData.filter(x => (includeLegacy || !isLegacyProfile(x)));
 }
 
 export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramework[]): Profile[] {
@@ -110,9 +70,7 @@ export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramewor
 /** Determines whether 'child' is a subset of 'parent'. */
 function pclIsSebset(parent: Profile, child: Profile): boolean {
     // 'child' is a subset of 'parent' if 'parent' has all the same framework groups as 'child', with lesser (or equal) versions.
-    const childf = child.frameworks.map(extendFramework);
-    const parentf = parent.frameworks.map(extendFramework);
-    return childf.every(c => parentf.some(p => c.prefix === p.prefix && p.version <= c.version));
+    return child.frameworks.every(c => parent.frameworks.some(p => c.prefix === p.prefix && p.version <= c.version));
 }
 
 export function removeSubsetPcls(profiles: Profile[]): Profile[] {
@@ -168,7 +126,7 @@ function alternateProfileGroup(profiles: Profile[], k: number, frameworks: Exten
     for (let combination of combinations(profiles, k)) {
         const set = {
             profiles: combination,
-            frameworks: _(combination).flatMap(x => x.frameworks).map(extendFramework).value()
+            frameworks: _(combination).flatMap(x => x.frameworks).value()
         };
         if (!profileSetMatch(set.profiles, resultProfiles))
             continue;
@@ -187,8 +145,8 @@ function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
         let ok = true;
         for (let other of profiles.filter(x => x !== g)) {
             // If the other one has all the same framework groups with lower versions for each, than this one is a strict subset of other, and the other should be removed.
-            const pf = _(g).flatMap(x => x.frameworks).map(extendFramework).value();
-            const otherf = _(other).flatMap(x => x.frameworks).map(extendFramework).value();
+            const pf = _(g).flatMap(x => x.frameworks).value();
+            const otherf = _(other).flatMap(x => x.frameworks).value();
             if (!pf.every(f => otherf.some(o => f.prefix === o.prefix && o.version <= f.version))) {
                 ok = false;
                 break;
@@ -210,9 +168,3 @@ export function alternateProfiles(includeLegacy: boolean, n: number, frameworks:
     }
     return ret;
 }
-
-// TODO: Alternative logic is wrong for this scenario:
-//  .NET 4.5, SL5, Win8.1, WP7.5, WPA8.1
-// Primary includes portable-net451+win81+wpa81
-// First alternative is portable-win81+wpa81, portable-net45+sl5+win81+wp71
-// Need to ensure each alternative set consumes all primary PCLs.

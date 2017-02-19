@@ -2,14 +2,15 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { Table } from 'react-bootstrap';
 
-import { Profile, Framework, prefix } from '../logic/logic';
+import { Profile } from '../logic/logic';
+import { ExtendedFramework, prefix } from '../logic/extendedFramework';
 
 export interface ProfileTableProps {
     profiles: Profile[];
     nugetTargets?: string[];
 }
 
-function frameworkNugetTarget(f: Framework, nugetTargets: string[]): string {
+function frameworkNugetTarget(f: ExtendedFramework, nugetTargets: string[]): string {
     for (let t of nugetTargets) {
         if (prefix(f.nugetTarget) === prefix(t))
             return t;

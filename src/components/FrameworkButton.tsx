@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 
-import { ExtendedFramework, prefix } from '../logic/logic';
+import { ExtendedFramework, prefix } from '../logic/extendedFramework';
 import { SelectionsState } from '../reducers';
 import { actions } from '../actions';
 
