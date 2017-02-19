@@ -43,8 +43,9 @@ export interface Group {
     friendlyName: string;
 }
 
-function extendFramework(framework: Framework) : ExtendedFramework {
-    return { ...framework,
+function extendFramework(framework: Framework): ExtendedFramework {
+    return {
+        ...framework,
         prefix: prefix(framework.nugetTarget),
         version: version(framework.nugetTarget)
     };
@@ -52,14 +53,14 @@ function extendFramework(framework: Framework) : ExtendedFramework {
 
 const nugetCompatibleData = data.filter(x => x.nugetTarget);
 
-function isLegacyFramework(f: Framework) : boolean {
+function isLegacyFramework(f: Framework): boolean {
     return f.nugetTarget === 'sl4' ||
         f.nugetTarget === 'win8' ||
         f.nugetTarget === 'wp71' ||
         f.nugetTarget === 'wp7';
 }
 
-function isLegacyProfile(p: Profile) : boolean {
+function isLegacyProfile(p: Profile): boolean {
     return !p.supportedByVisualStudio2015;
 }
 
@@ -77,17 +78,17 @@ export function getGroups(includeLegacy: boolean): Group[] {
     }));
 }
 
-export function numSelectedGroups(includeLegacy: boolean, selections: { [key: string]: string }) : number {
+export function numSelectedGroups(includeLegacy: boolean, selections: { [key: string]: string }): number {
     return getGroups(includeLegacy).filter(x => selections[x.key]).length;
 }
 
-export function selectedFrameworks(includeLegacy: boolean, selections: { [key: string]: string }) : ExtendedFramework[] {
+export function selectedFrameworks(includeLegacy: boolean, selections: { [key: string]: string }): ExtendedFramework[] {
     return getFrameworks(includeLegacy).filter(x => selections[prefix(x.nugetTarget)] === x.nugetTarget);
 }
 
 // A profile matches if all of its frameworks are in a group represented by the selected frameworks, AND
 //  if its framework version is greater than or equal to a selected framework in that group.
-function profileMatch(profile: Profile, frameworks: ExtendedFramework[]) : boolean {
+function profileMatch(profile: Profile, frameworks: ExtendedFramework[]): boolean {
     for (let f of profile.frameworks.map(extendFramework)) {
         let matches = frameworks.filter(x => x.prefix === f.prefix);
         if (matches.length === 0)
@@ -98,12 +99,12 @@ function profileMatch(profile: Profile, frameworks: ExtendedFramework[]) : boole
     return true;
 }
 
-export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramework[]) : Profile[] {
+export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramework[]): Profile[] {
     return nugetCompatibleData.filter(x => (includeLegacy || !isLegacyProfile(x)) && profileMatch(x, frameworks));
 }
 
-export function removeSubsetPcls(profiles: Profile[]) : Profile[] {
-    const result : Profile[] = [];
+export function removeSubsetPcls(profiles: Profile[]): Profile[] {
+    const result: Profile[] = [];
     for (let p of profiles) {
         let ok = true;
         for (let other of profiles.filter(x => x !== p)) {
@@ -121,6 +122,23 @@ export function removeSubsetPcls(profiles: Profile[]) : Profile[] {
     return result;
 }
 
-export function netstandardVersion(selections: { [key: string]: string }) : string {
+export function netstandardVersion(selections: { [key: string]: string }): string {
     return _(selectedFrameworks(true, selections)).map(x => x.netStandard || 'netstandard1.0').min();
+}
+
+function combinations<T>(array: T[], k: number): T[][] {
+    const ret: T[][] = [];
+    for (let arrayIndex = 0; arrayIndex < array.length; ++arrayIndex) {
+        if (k === 1) {
+            ret.push([array[arrayIndex]]);
+        } else {
+            const child = combinations(array.slice(arrayIndex + 1, array.length), k - 1);
+            for (let childIndex = 0; childIndex < child.length; childIndex++) {
+                const next = child[childIndex];
+                next.unshift(array[arrayIndex]);
+                ret.push(next);
+            }
+        }
+    }
+    return ret;
 }
