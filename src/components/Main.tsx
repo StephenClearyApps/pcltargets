@@ -6,17 +6,12 @@ import { FrameworkButtonGroup } from './FrameworkButtonGroup';
 import { ProfileTable } from './ProfileTable';
 import { AlternateResult } from './AlternateResult';
 import { Ad } from './Ad';
-import { getGroups, selectedFrameworks, findAllPcls, removeSubsetPcls, netstandardVersion, alternateProfiles } from '../logic/logic';
+import { getGroups } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
-export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, includeLegacyProfiles, selections }: State) {
-    const frameworks = selectedFrameworks(includeLegacyFrameworks, selections);
-    const fullResult = findAllPcls(includeLegacyProfiles, frameworks);
-    const result = removeSubsetPcls(fullResult);
-    const netstandard = netstandardVersion(selections);
-    const alternates = usesEnlightenment ? alternateProfiles(includeLegacyProfiles, result.length, frameworks, result) : [];
-
+export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, selections,
+    result: { primaryTargetProfiles, netstandard, alternativeTargetProfiles, alternativeNugetTargets, compatibileProfiles } }: State) {
     return (
         <div>
             <Checkbox checked={usesEnlightenment} onChange={() => actions.setEnlightenment(!usesEnlightenment)}>My project requires platform-specific binaries
@@ -27,15 +22,15 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, i
                 <div className="scclear"/>
             </div>
             <h2>Results</h2>
-            {result.length === 0 ? <p>Select more platforms to show PCL results.</p> :
+            {primaryTargetProfiles.length === 0 ? <p>Select more platforms to show PCL results.</p> :
                 <div>
                     <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
-                    <ProfileTable profiles={result}/>
-                    {_(alternates).flatMap(x => x).map(x => <AlternateResult profiles={x} nugetTargets={frameworks.map(y => y.nugetTarget)}/>).value()}
+                    <ProfileTable profiles={primaryTargetProfiles}/>
+                    {alternativeTargetProfiles.map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>)}
                     <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
-                    <ProfileTable profiles={fullResult}/>
+                    <ProfileTable profiles={compatibileProfiles}/>
                 </div>
             }
             <p>By <a href="http://stephencleary.com">Stephen Cleary</a>. Please do <a href="https://github.com/StephenClearyApps/pcltargets/issues">report any bugs</a>. Thanks!</p>
