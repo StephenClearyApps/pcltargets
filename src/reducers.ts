@@ -24,6 +24,7 @@ export interface State {
     includeLegacyProfiles: boolean;
     selections: SelectionsState;
     result: ResultsState;
+    numAlternativeTargetsToDisplay: number;
 }
 
 function calculateIncludes(usesEnlightenment: boolean, usesVS2012: boolean): { includeLegacyFrameworks: boolean; includeLegacyProfiles: boolean; } {
@@ -107,16 +108,25 @@ function setVS2012(state: State, action: A.SetVS2012Action): State {
     };
 }
 
+function showAlternativeProfiles(state: State, action: A.ShowAlternativeProfilesAction): State {
+    return {
+        ...state,
+        numAlternativeTargetsToDisplay: action.payload.numAlternativeTargetsToDisplay
+    };
+}
+
 export const reducers = (handleActions as ReduxActionsFixed.HandleActions<State>)({
     [A.Types.SELECT]: select,
     [A.Types.SET_ENLIGHTENMENT]: setEnlightenment,
-    [A.Types.SET_VS2012]: setVS2012
+    [A.Types.SET_VS2012]: setVS2012,
+    [A.Types.SHOW_ALTERNATIVE_PROFILES]: showAlternativeProfiles
 }, {
         usesEnlightenment: false,
         usesVS2012: false,
         includeLegacyFrameworks: true,
         includeLegacyProfiles: false,
         selections: {},
+        numAlternativeTargetsToDisplay: 0,
         result: {
             primaryTargetProfiles: [],
             netstandard: null,

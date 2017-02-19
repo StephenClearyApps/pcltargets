@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Checkbox } from 'react-bootstrap';
+import { Checkbox, Button } from 'react-bootstrap';
 
 import { FrameworkButtonGroup } from './FrameworkButtonGroup';
 import { ProfileTable } from './ProfileTable';
@@ -10,7 +10,7 @@ import { getGroups } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
-export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, selections,
+export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, selections, numAlternativeTargetsToDisplay,
     result: { primaryTargetProfiles, netstandard, alternativeTargetProfiles, alternativeNugetTargets, compatibileProfiles } }: State) {
     return (
         <div>
@@ -27,7 +27,8 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, s
                     <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
                     <ProfileTable profiles={primaryTargetProfiles}/>
-                    {alternativeTargetProfiles.map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>)}
+                    {_(alternativeTargetProfiles).take(numAlternativeTargetsToDisplay).map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>).value()}
+                    {alternativeTargetProfiles.length <= numAlternativeTargetsToDisplay ? null : <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(numAlternativeTargetsToDisplay + 3)}>Show {numAlternativeTargetsToDisplay === 0 ? null : 'more'} alternatives</Button>}
                     <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={compatibileProfiles}/>
