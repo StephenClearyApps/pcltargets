@@ -27,13 +27,13 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, s
                     <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
                     <ProfileTable profiles={primaryTargetProfiles}/>
-                    {_(alternativeTargetProfiles).take(numAlternativeTargetsToDisplay).map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>).value()}
+                    {/*_(alternativeTargetProfiles).take(numAlternativeTargetsToDisplay).map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>).value()}
                     {alternativeTargetProfiles.length <= numAlternativeTargetsToDisplay ? null : 
                         <div>
                             <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(numAlternativeTargetsToDisplay + 3)}>Show {numAlternativeTargetsToDisplay === 0 ? null : 'more'} alternatives</Button>
                             <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(Number.POSITIVE_INFINITY)}>Show all alternatives</Button>
                         </div>
-                    }
+                    */}
                     <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={compatibileProfiles}/>
