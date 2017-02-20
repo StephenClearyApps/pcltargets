@@ -53,8 +53,8 @@ function calculateResults(usesEnlightenment: boolean, includeLegacyFrameworks: b
     return {
         netstandard: netstandardVersion(selections),
         primaryTargetProfiles: result,
-        alternativeTargetProfiles: [],//usesEnlightenment ? _.flatMap(alternateProfiles(includeLegacyProfiles, result.length, frameworks, result), x => x) : [],
-        alternativeNugetTargets: [],//frameworks.map(y => y.nugetTarget),
+        alternativeTargetProfiles: usesEnlightenment ? alternateProfiles(includeLegacyProfiles, result.length, frameworks, result) : [],
+        alternativeNugetTargets: frameworks.map(y => y.nugetTarget),
         compatibileProfiles: fullResult
     };
 }

@@ -68,7 +68,7 @@ export function findAllPcls(includeLegacy: boolean, frameworks: ExtendedFramewor
 }
 
 /** Determines whether 'child' is a subset of 'parent'. */
-function pclIsSebset(parent: Profile, child: Profile): boolean {
+function pclIsSubset(parent: Profile, child: Profile): boolean {
     // 'child' is a subset of 'parent' if 'parent' has all the same framework groups as 'child', with lesser (or equal) versions.
     return child.frameworks.every(c => parent.frameworks.some(p => c.prefix === p.prefix && p.version <= c.version));
 }
@@ -79,7 +79,7 @@ export function removeSubsetPcls(profiles: Profile[]): Profile[] {
         let ok = true;
         for (let other of profiles.filter(x => x !== p)) {
             // If this one is a strict subset of other, then it should be removed.
-            if (pclIsSebset(other, p)) {
+            if (pclIsSubset(other, p)) {
                 ok = false;
                 break;
             }
@@ -118,7 +118,7 @@ interface ProfileSet {
 
 // A profile set matches if every result profile is a subset of one of the alternative result profiles.
 function profileSetMatch(alternativeResultProfiles: Profile[], resultProfiles: Profile[]): boolean {
-    return resultProfiles.every(r => alternativeResultProfiles.some(a => pclIsSebset(a, r)));
+    return resultProfiles.every(r => alternativeResultProfiles.some(a => pclIsSubset(a, r)));
 }
 
 function alternateProfileGroup(profiles: Profile[], k: number, frameworks: ExtendedFramework[], resultProfiles: Profile[]): Profile[][] {
@@ -139,16 +139,15 @@ function alternateProfileGroup(profiles: Profile[], k: number, frameworks: Exten
     return ret.map(x => x.profiles);
 }
 
-// TODO: I think this function must take into account the special nuget targets, and compare on a profile-by-profile basis rather than all frameworks at once.
 function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
     const result: Profile[][] = [];
     for (let g of profiles) {
-        const pf = _(g).flatMap(x => x.frameworks).uniqBy(x => x.nugetTarget).value();
         let ok = true;
-        for (let other of profiles.filter(x => x !== g)) {
-            // If this group has all the same framework groups with lower versions for each, than the other one is a strict subset of this group, and this group should be removed.
-            const otherf = _(other).flatMap(x => x.frameworks).uniqBy(x => x.nugetTarget).value();
-            if (otherf.every(o => pf.some(f => f.prefix === o.prefix && f.version <= o.version))) {
+        for (let other of profiles) {
+            if (other === g)
+                continue;
+            // If every profile in the other group is a subset for some profile in this group, then the other group is a subset of this group, and this group should be removed.
+            if (other.every(o => g.some(p => pclIsSubset(p, o)))) {
                 ok = false;
                 break;
             }
@@ -156,18 +155,15 @@ function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
         if (ok)
             result.push(g);
     }
-    if (result.length === 0 && profiles.length !== 0)
-        debugger;
     return result;
 }
 
-export function alternateProfiles(includeLegacy: boolean, n: number, frameworks: ExtendedFramework[], resultProfiles: Profile[]): Profile[][][] {
+export function alternateProfiles(includeLegacy: boolean, n: number, frameworks: ExtendedFramework[], resultProfiles: Profile[]): Profile[][] {
     const profiles = validProfiles(includeLegacy);
-    const ret: Profile[][][] = [];
+    const ret: Profile[][] = [];
     for (let k = 1; k < n; ++k) {
         const set = alternateProfileGroup(profiles, k, frameworks, resultProfiles);
-        if (set.length !== 0)
-            ret.push(removeSubsetPclGroups(set));
+        ret.push(...removeSubsetPclGroups(set));
     }
     return ret;
 }
