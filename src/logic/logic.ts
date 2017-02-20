@@ -142,12 +142,12 @@ function alternateProfileGroup(profiles: Profile[], k: number, frameworks: Exten
 function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
     const result: Profile[][] = [];
     for (let g of profiles) {
+        const pf = _(g).flatMap(x => x.frameworks).uniqBy(x => x.nugetTarget).value();
         let ok = true;
         for (let other of profiles.filter(x => x !== g)) {
-            // If the other one has all the same framework groups with lower versions for each, than this one is a strict subset of other, and the other should be removed.
-            const pf = _(g).flatMap(x => x.frameworks).value();
-            const otherf = _(other).flatMap(x => x.frameworks).value();
-            if (!pf.every(f => otherf.some(o => f.prefix === o.prefix && o.version <= f.version))) {
+            // If this group has all the same framework groups with lower versions for each, than the other one is a strict subset of this group, and this group should be removed.
+            const otherf = _(other).flatMap(x => x.frameworks).uniqBy(x => x.nugetTarget).value();
+            if (otherf.every(o => pf.some(f => f.prefix === o.prefix && f.version <= o.version))) {
                 ok = false;
                 break;
             }
@@ -155,6 +155,8 @@ function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
         if (ok)
             result.push(g);
     }
+    if (result.length === 0 && profiles.length !== 0)
+        debugger;
     return result;
 }
 
