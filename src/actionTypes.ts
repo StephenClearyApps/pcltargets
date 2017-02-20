@@ -21,5 +21,5 @@ export type SetVS2012Action = PayloadAction<{
 }>;
 
 export type ShowAlternativeProfilesAction = PayloadAction<{
-    numAlternativeTargetsToDisplay: number;
+    alternativeTargetDepth: number;
 }>;

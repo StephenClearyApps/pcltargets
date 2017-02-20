@@ -24,7 +24,7 @@ export interface State {
     includeLegacyProfiles: boolean;
     selections: SelectionsState;
     result: ResultsState;
-    numAlternativeTargetsToDisplay: number;
+    alternativeTargetDepth: number;
 }
 
 function calculateIncludes(usesEnlightenment: boolean, usesVS2012: boolean): { includeLegacyFrameworks: boolean; includeLegacyProfiles: boolean; } {
@@ -76,7 +76,7 @@ function select(state: State, action: A.SelectAction): State {
     return {
         ...state,
         selections,
-        numAlternativeTargetsToDisplay: 0,
+        alternativeTargetDepth: 1,
         result: calculateResults(state.usesEnlightenment, state.includeLegacyFrameworks, state.includeLegacyProfiles, selections)
     };
 }
@@ -91,7 +91,7 @@ function setEnlightenment(state: State, action: A.SetEnlightenmentAction): State
         includeLegacyFrameworks: includes.includeLegacyFrameworks,
         includeLegacyProfiles: includes.includeLegacyProfiles,
         selections,
-        numAlternativeTargetsToDisplay: 0,
+        alternativeTargetDepth: 1,
         result: calculateResults(usesEnlightenment, includes.includeLegacyFrameworks, includes.includeLegacyProfiles, selections)
     };
 }
@@ -106,7 +106,7 @@ function setVS2012(state: State, action: A.SetVS2012Action): State {
         includeLegacyFrameworks: includes.includeLegacyFrameworks,
         includeLegacyProfiles: includes.includeLegacyProfiles,
         selections,
-        numAlternativeTargetsToDisplay: 0,
+        alternativeTargetDepth: 1,
         result: calculateResults(state.usesEnlightenment, includes.includeLegacyFrameworks, includes.includeLegacyProfiles, selections)
     };
 }
@@ -114,7 +114,7 @@ function setVS2012(state: State, action: A.SetVS2012Action): State {
 function showAlternativeProfiles(state: State, action: A.ShowAlternativeProfilesAction): State {
     return {
         ...state,
-        numAlternativeTargetsToDisplay: action.payload.numAlternativeTargetsToDisplay
+        alternativeTargetDepth: action.payload.alternativeTargetDepth
     };
 }
 
@@ -129,7 +129,7 @@ export const reducers = (handleActions as ReduxActionsFixed.HandleActions<State>
         includeLegacyFrameworks: true,
         includeLegacyProfiles: false,
         selections: {},
-        numAlternativeTargetsToDisplay: 0,
+        alternativeTargetDepth: 1,
         result: {
             primaryTargetProfiles: [],
             netstandard: null,

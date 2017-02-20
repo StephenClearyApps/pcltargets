@@ -10,8 +10,9 @@ import { getGroups } from '../logic/logic';
 import { State } from '../reducers';
 import { actions } from '../actions';
 
-export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, selections, numAlternativeTargetsToDisplay,
+export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, selections, alternativeTargetDepth,
     result: { primaryTargetProfiles, netstandard, alternativeTargetProfiles, alternativeNugetTargets, compatibileProfiles } }: State) {
+    const alternatives = _(alternativeTargetProfiles).takeWhile(x => x.length <= alternativeTargetDepth).value();
     return (
         <div>
             <Checkbox checked={usesEnlightenment} onChange={() => actions.setEnlightenment(!usesEnlightenment)}>My project requires platform-specific binaries
@@ -27,13 +28,13 @@ export function Main({ usesEnlightenment, usesVS2012, includeLegacyFrameworks, s
                     <h3>Primary PCL Targets</h3>
                     <div>You should support <a href="https://github.com/dotnet/standard">{netstandard}</a> and these PCL targets:</div>
                     <ProfileTable profiles={primaryTargetProfiles}/>
-                    {/*_(alternativeTargetProfiles).take(numAlternativeTargetsToDisplay).map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>).value()}
-                    {alternativeTargetProfiles.length <= numAlternativeTargetsToDisplay ? null : 
+                    {alternatives.map(x => <AlternateResult profiles={x} nugetTargets={alternativeNugetTargets}/>)}
+                    {alternativeTargetProfiles.length === alternatives.length ? null : 
                         <div>
-                            <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(numAlternativeTargetsToDisplay + 3)}>Show {numAlternativeTargetsToDisplay === 0 ? null : 'more'} alternatives</Button>
+                            <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(alternativeTargetDepth + 1)}>Show more alternatives</Button>
                             <Button bsStyle="primary" onClick={() => actions.showAlternativeProfiles(Number.POSITIVE_INFINITY)}>Show all alternatives</Button>
                         </div>
-                    */}
+                    }
                     <h3>PCL Compatibility</h3>
                     <div>Your library will be compatible with these PCL profiles:</div>
                     <ProfileTable profiles={compatibileProfiles}/>
