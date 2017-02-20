@@ -14,7 +14,7 @@ export function prefix(input: string): string {
     return input ? input.match(/[a-z ]+/i)[0].trim() : '';
 }
 
-function version(input: string): number {
+export function version(input: string): number {
     var result = input ? parseInt(input.match(/[0-9]+/)[0]) : 0;
     if (result > 100)
         return result;

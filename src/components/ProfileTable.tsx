@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { Table } from 'react-bootstrap';
 
 import { Profile } from '../logic/logic';
-import { ExtendedFramework, prefix } from '../logic/extendedFramework';
+import { ExtendedFramework, prefix, version } from '../logic/extendedFramework';
 
 export interface ProfileTableProps {
     profiles: Profile[];
@@ -12,8 +12,11 @@ export interface ProfileTableProps {
 
 function frameworkNugetTarget(f: ExtendedFramework, nugetTargets: string[]): string {
     for (let t of nugetTargets) {
-        if (prefix(f.nugetTarget) === prefix(t))
-            return t;
+        if (f.prefix === prefix(t)) {
+            if (f.version <= version(t))
+                return t;
+            return f.nugetTarget;
+        }
     }
     return null;
 }
