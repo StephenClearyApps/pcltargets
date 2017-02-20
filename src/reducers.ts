@@ -76,6 +76,7 @@ function select(state: State, action: A.SelectAction): State {
     return {
         ...state,
         selections,
+        numAlternativeTargetsToDisplay: 0,
         result: calculateResults(state.usesEnlightenment, state.includeLegacyFrameworks, state.includeLegacyProfiles, selections)
     };
 }
@@ -90,6 +91,7 @@ function setEnlightenment(state: State, action: A.SetEnlightenmentAction): State
         includeLegacyFrameworks: includes.includeLegacyFrameworks,
         includeLegacyProfiles: includes.includeLegacyProfiles,
         selections,
+        numAlternativeTargetsToDisplay: 0,
         result: calculateResults(usesEnlightenment, includes.includeLegacyFrameworks, includes.includeLegacyProfiles, selections)
     };
 }
@@ -104,6 +106,7 @@ function setVS2012(state: State, action: A.SetVS2012Action): State {
         includeLegacyFrameworks: includes.includeLegacyFrameworks,
         includeLegacyProfiles: includes.includeLegacyProfiles,
         selections,
+        numAlternativeTargetsToDisplay: 0,
         result: calculateResults(state.usesEnlightenment, includes.includeLegacyFrameworks, includes.includeLegacyProfiles, selections)
     };
 }
