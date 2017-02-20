@@ -139,6 +139,7 @@ function alternateProfileGroup(profiles: Profile[], k: number, frameworks: Exten
     return ret.map(x => x.profiles);
 }
 
+// TODO: I think this function must take into account the special nuget targets, and compare on a profile-by-profile basis rather than all frameworks at once.
 function removeSubsetPclGroups(profiles: Profile[][]): Profile[][] {
     const result: Profile[][] = [];
     for (let g of profiles) {
